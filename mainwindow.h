@@ -23,6 +23,10 @@ private slots:
 
     void on_btnDecompress_clicked();
 
+    void on_compressFileOpen_clicked();
+
+    void on_decompressFileOpen_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

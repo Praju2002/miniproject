@@ -120,6 +120,32 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="compressFileOpen">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>430</y>
+       <width>221</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open Compressed</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="decompressFileOpen">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>430</y>
+       <width>221</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open Decompressed</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

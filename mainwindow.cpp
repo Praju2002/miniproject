@@ -1,7 +1,12 @@
+#include <iostream>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "huffman.h"
 #include <QFileDialog>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QStandardPaths>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -54,5 +59,21 @@ void MainWindow::on_btnDecompress_clicked()
     QString qstr = QString::fromStdString(toCompressDecompressFile);
     QString qstrData = QString::fromStdString("output.txt");
     decompressFile(qstr,qstrData);
+}
+
+
+void MainWindow::on_compressFileOpen_clicked()
+{
+    QString desktopPath = "compress";
+    std::cout << "Number: " << desktopPath.toStdString() <<std::endl;
+    QDesktopServices::openUrl(QUrl::fromLocalFile(desktopPath));
+}
+
+
+void MainWindow::on_decompressFileOpen_clicked()
+{
+    QString desktopPath = "decompress";
+    std::cout << "Number: " << desktopPath.toStdString() <<std::endl;
+    QDesktopServices::openUrl(QUrl::fromLocalFile(desktopPath));
 }
 

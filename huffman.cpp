@@ -5,6 +5,7 @@
 #include <bitset>
 #include <fstream>
 #include <QMessageBox>
+#include <direct.h>   // For _mkdir on Windows systems
 
 using namespace std;
 
@@ -188,6 +189,14 @@ std::streampos getFileSize(const std::string &filename)
     return file.tellg();
 }
 
+void createDirectory(const std::string& directoryPath) {
+#ifdef _WIN32
+    _mkdir(directoryPath.c_str());
+#else
+    mkdir(directoryPath.c_str(), 0777); // Note: You might want to use more restrictive permissions
+#endif
+}
+
 void compressFile(const QString &inputFileName, const QString &outputFileName)
 {
     // Read input data from the provided file
@@ -215,8 +224,17 @@ void compressFile(const QString &inputFileName, const QString &outputFileName)
 
     std::string compressedData = huffmanCompress(originalData, codeTable);
 
-    // Save the Huffman tree and compressed data to a file
-    std::ofstream outFile(outputFileName.toStdString(), std::ios::binary);
+    // Define the folder name
+    std::string compressFolder = "compress";
+
+    // Create the folder if it doesn't exist
+    createDirectory(compressFolder);
+
+    // Modify the output file name to include the folder
+    std::string outputFileNameWithPath = compressFolder + "/" + outputFileName.toStdString();
+
+    // Save the Huffman tree and compressed data to a file within the "compress" folder
+    std::ofstream outFile(outputFileNameWithPath, std::ios::binary);
     outFile.put(huffmanTree->symbol);
     encodeHuffmanTree(huffmanTree, outFile);
     outFile << compressedData;
@@ -225,13 +243,14 @@ void compressFile(const QString &inputFileName, const QString &outputFileName)
     // Calculate original file size
     std::streampos originalFileSize = getFileSize(inputFileName.toStdString());
     // Calculate compressed file size
-    std::streampos compressedFileSize = getFileSize(outputFileName.toStdString());
+    std::streampos compressedFileSize = getFileSize(outputFileNameWithPath);
     double compressionRatio = static_cast<double>(compressedFileSize) / originalFileSize;
     QString stringCompressionRatio = QString::number(compressionRatio);
-    cout << "Compression successful. Compressed data saved in '" << outputFileName.toStdString() << "'." << endl;
+    cout << "Compression successful. Compressed data saved in '" << outputFileNameWithPath << "'." << endl;
     cout << "Compression Ratio: " << compressionRatio << endl;
 
-    QMessageBox::information(nullptr, "Compress", "Compression successful. Compressed data saved in " + outputFileName + " with compression ratio of " + stringCompressionRatio );
+    QMessageBox::information(nullptr, "Compress", "Compression successful. Compressed data saved in " + QString::fromStdString(outputFileNameWithPath) + " with a compression ratio of " + stringCompressionRatio);
+
 }
 
 // Function to decompress the input compressed file using Huffman coding
@@ -262,8 +281,17 @@ void decompressFile(const QString &inputFileName, const QString &outputFileName)
     // Decompress the data
     std::string decompressedData = huffmanDecompress(compressedData, decodedHuffmanTree);
 
+    // Define the folder name
+    std::string decompressFolder = "decompress";
+
+    // Create the folder if it doesn't exist
+    createDirectory(decompressFolder);
+
+    // Modify the output file name to include the folder
+    std::string outputFileNameWithPath = decompressFolder + "/" + outputFileName.toStdString();
+
     // Save the decompressed data to a file
-    std::ofstream outFile(outputFileName.toStdString());
+    std::ofstream outFile(outputFileNameWithPath, std::ios::binary);
     outFile << decompressedData;
     outFile.close();
 
