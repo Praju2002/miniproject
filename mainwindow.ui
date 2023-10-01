@@ -69,7 +69,7 @@
       <string notr="true">background-color:rgb(255,255,255)</string>
      </property>
      <property name="text">
-      <string>Browse for Files</string>
+      <string>Browse for files</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnCompress">
@@ -130,7 +130,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Open Compressed</string>
+      <string>Open Compressed File</string>
      </property>
     </widget>
     <widget class="QPushButton" name="decompressFileOpen">
@@ -143,7 +143,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Open Decompressed</string>
+      <string>Open Decompressed File</string>
      </property>
     </widget>
    </widget>

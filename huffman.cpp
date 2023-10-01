@@ -295,15 +295,31 @@ void decompressFile(const QString &inputFileName, const QString &outputFileName)
     outFile << decompressedData;
     outFile.close();
 
+//    // Calculate original file size
+//    std::streampos originalFileSize = getFileSize(inputFileName.toStdString());
+//    // Calculate compressed file size
+//    std::streampos decompressedFileSize = getFileSize(outputFileName.toStdString());
+//    double compressionRatio = static_cast<double>(decompressedFileSize) / originalFileSize;
+//    QString stringDecompressionRatio = QString::number(compressionRatio);
+//    cout << "Decompression successful. Decompressed data saved in '" << outputFileName.toStdString() << "'." << endl;
+//    cout << "Decompression Ratio: " << compressionRatio << endl;
+
+
+//    QMessageBox::information(nullptr, "Decompress", "Decompression successful. Decompressed data saved in " + outputFileName + " with decompression ratio of " + stringDecompressionRatio );
+//}
     // Calculate original file size
-    std::streampos originalFileSize = getFileSize(inputFileName.toStdString());
+    //std::streampos originalFileSize = getFileSize(inputFileName.toStdString());
+
     // Calculate compressed file size
-    std::streampos decompressedFileSize = getFileSize(outputFileName.toStdString());
-    double compressionRatio = static_cast<double>(decompressedFileSize) / originalFileSize;
-    QString stringDecompressionRatio = QString::number(compressionRatio);
+    std::streampos compressedFileSize = getFileSize(outputFileNameWithPath);
+
+    // Calculate decompression ratio
+    double decompressionRatio = static_cast<double>(compressedFileSize) / compressedData.size();
+
+    QString stringDecompressionRatio = QString::number(decompressionRatio);
     cout << "Decompression successful. Decompressed data saved in '" << outputFileName.toStdString() << "'." << endl;
-    cout << "Decompression Ratio: " << compressionRatio << endl;
+    cout << "Decompression Ratio: " << decompressionRatio << endl;
 
-
-    QMessageBox::information(nullptr, "Decompress", "Decompression successful. Decompressed data saved in " + outputFileName + " with decompression ratio of " + stringDecompressionRatio );
+    QMessageBox::information(nullptr, "Decompress", "Decompression successful. Decompressed data saved in " + outputFileName + " with decompression ratio of " + stringDecompressionRatio);
 }
+
