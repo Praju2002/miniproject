@@ -55,7 +55,6 @@ Open the project in **Qt Creator** and build/run the application.
 
 ## Author
 
-Developed by **[Praju]**.
-
+Developed by **Praju**.
 
 
